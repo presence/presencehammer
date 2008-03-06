@@ -1,7 +1,7 @@
 #Config file for the Dialer App
 sleep_before_start: 3 #Number of seconds for the loop to start ensuring we have a connection to the ManagerAPI
-cycle_length: 10 #Number of calls to launch for each dial_strategy
-delay_between_cycle: 30 #Number of seconds to delay between each cylce of the dial_strategy
+cycle_length: 1 #Number of calls to launch for each dial_strategy
+delay_between_cycle: 300 #Number of seconds to delay between each cylce of the dial_strategy
 delay_between_calls: 2 #Seconds to delay between launching each call
 thread_cycles: false #Set this to true to launch each dial_strategy cycle in its own thread to create simultaneous calling
 logging_enabled: true #Turn logging on and off
@@ -42,14 +42,14 @@ profile2:
 #and the profile to use from above.
 dial_strategy:
   - number: 1000
-    send_dtmf: wwww#wwww1
+    send_dtmf: 'wwww#wwww1'
     call_length: 180
     profile: profile1
   - number: 2000
-    send_dtmf: wwww#wwww1
+    send_dtmf: 'wwww#wwww1'
     call_length: 180
     profile: profile1
   - number: 3000
-    send_dtmf: wwww#wwww1
+    send_dtmf: 'wwww#wwww1'
     call_length: 180  
     profile: profile2

@@ -6,19 +6,19 @@ class Hammer
   def self.launch_call(phone_number, profile, instructions)
     #Finish setting our instructions into a variable to be attached to the channel we create
     if $HELPERS["hammer"][profile]["before_delay"] != nil
-      instructions = instructions + ",before_delay=" + $HELPERS["hammer"][profile]["before_delay"].to_s
+      instructions = instructions + "|before_delay=" + $HELPERS["hammer"][profile]["before_delay"].to_s
     else
-      instructions = instructions + ",before_delay=0"
+      instructions = instructions + "|before_delay=0"
     end
     if $HELPERS["hammer"][profile]["after_delay"] != nil
-      instructions = instructions + ",after_delay=" + $HELPERS["hammer"][profile]["after_delay"].to_s
+      instructions = instructions + "|after_delay=" + $HELPERS["hammer"][profile]["after_delay"].to_s
     else
-      instructions = instructions + ",after_delay=0"
+      instructions = instructions + "|after_delay=0"
     end
     if $HELPERS["hammer"][profile]["message"] != nil
-      instructions = instructions + ",message=" + $HELPERS["hammer"][profile]["message"].to_s
+      instructions = instructions + "|message=" + $HELPERS["hammer"][profile]["message"].to_s
     else
-      instructions = instructions + ",message=nil"
+      instructions = instructions + "|message=nil"
     end
     
     #Determine if the channel type is IAX2 or SIP and make a determination on how to dial
@@ -44,19 +44,18 @@ class Hammer
     $HELPERS["hammer"]["dial_strategy"].each do |strategy|
       #Set our instructions to include in the variable for the AGI
       instructions = String.new
-      if strategy.dtmf != nil
+      if strategy.send_dtmf != nil
         instructions = "send_dtmf=" + strategy.send_dtmf.to_s
       else
         instructions = "send_dtmf=nil"
       end
       if strategy.call_length != nil
-        instructions = instructions + ",call_length=" + strategy.call_length.to_s
+        instructions = instructions + "|call_length=" + strategy.call_length.to_s
       else
-        instructions = instructions + ",call_length=0"
+        instructions = instructions + "|call_length=0"
       end
       #Luanch the individual calls
       response = self.launch_call strategy.number, strategy.profile, instructions
-      log 'Response: ' + response
     end
   end
 
@@ -80,6 +79,7 @@ class Hammer
         else
           self.execute_strategy
         end
+        cnt += 1
       end
       #Sleep the time requested between launching a strategy
       sleep $HELPERS["hammer"]["delay_between_cycle"]
