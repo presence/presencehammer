@@ -37,7 +37,7 @@ profile2:
   after_delay: 2
   message: tt-monkeys
   
-#This is where you set how many calls in a cylce you what to launch and of what type
+#This is where you set how many calls in a cycle you what to launch and of what type
 #each of the elements below will launch one call with the dtmf settings, the lenght of call
 #and the profile to use from above.
 dial_strategy:
