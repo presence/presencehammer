@@ -20,7 +20,6 @@ class Hammer
     else
       instructions = instructions + ",message=nil"
     end
-    log 'instructions ' + instructions
     
     #Determine if the channel type is IAX2 or SIP and make a determination on how to dial
     channel_type = $HELPERS["hammer"][profile]["channel"].split('/')
@@ -29,16 +28,15 @@ class Hammer
     else
       channel = $HELPERS["hammer"][profile]["channel"] + phone_number.to_s
     end
-    log channel
     
-    response = PBX.rami_client.originate({:channel => channel,
-                                          :context =>  $HELPERS["hammer"][profile]["context"],
-                                          :exten =>  $HELPERS["hammer"][profile]["extension"],
-                                          :priority => $HELPERS["hammer"][profile]["priority"],
-                                          :callerid => $HELPERS["hammer"][profile]["callerid"],
-                                          :timeout => $HELPERS["hammer"][profile]["timeout"],
-                                          :variable => instructions,
-					                                :async => $HELPERS["hammer"][profile]["async"]})
+    response = PBX.rami_client.originate({"Channel" => channel,
+                                          "Context" =>  $HELPERS["hammer"][profile]["context"],
+                                          "Exten" =>  $HELPERS["hammer"][profile]["extension"],
+                                          "Priority" => $HELPERS["hammer"][profile]["priority"],
+                                          "Callerid" => $HELPERS["hammer"][profile]["callerid"],
+                                          "Timeout" => $HELPERS["hammer"][profile]["timeout"],
+                                          "Variable" => instructions,
+					                                "Async" => $HELPERS["hammer"][profile]["async"]})
     return response
   end
   
@@ -58,6 +56,7 @@ class Hammer
       end
       #Luanch the individual calls
       response = self.launch_call strategy.number, strategy.profile, instructions
+      log 'Response: ' + response
     end
   end
 
