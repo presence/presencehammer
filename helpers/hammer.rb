@@ -5,39 +5,40 @@ class Hammer
   
   def self.launch_call(phone_number, profile, instructions)
     #Finish setting our instructions into a variable to be attached to the channel we create
-    if $HELPER["hammer"]["#{profile}"]["before_delay"] != nil
-      instructions = instructions + ",before_delay=" + $HELPER["hammer"]["#{profile}"]["before_delay"].to_s
+    if $HELPERS["hammer"][profile]["before_delay"] != nil
+      instructions = instructions + ",before_delay=" + $HELPERS["hammer"][profile]["before_delay"].to_s
     else
       instructions = instructions + ",before_delay=0"
     end
-    if $HELPER["hammer"]["#{profile}"]["after_delay"] != nil
-      instructions = instructions + ",after_delay=" + $HELPER["hammer"]["#{profile}"]["after_delay"].to_s
+    if $HELPERS["hammer"][profile]["after_delay"] != nil
+      instructions = instructions + ",after_delay=" + $HELPERS["hammer"][profile]["after_delay"].to_s
     else
       instructions = instructions + ",after_delay=0"
     end
-    if $HELPER["hammer"]["#{profile}"]["message"] != nil
-      instructions = instructions + ",message=" + $HELPER["hammer"]["#{profile}"]["message"].to_s
+    if $HELPERS["hammer"][profile]["message"] != nil
+      instructions = instructions + ",message=" + $HELPERS["hammer"][profile]["message"].to_s
     else
       instructions = instructions + ",message=nil"
     end
     log 'instructions ' + instructions
     
     #Determine if the channel type is IAX2 or SIP and make a determination on how to dial
-    channel_type = $HELPERS["hammer"]["#{profile}"]["channel"].split('/')
-    if channel_type == "IAX2"
-      channel = $HELPERS["hammer"]["#{profile}"]["channel"] + phone_number
+    channel_type = $HELPERS["hammer"][profile]["channel"].split('/')
+    if channel_type[0] == "IAX2"
+      channel = $HELPERS["hammer"][profile]["channel"] + phone_number.to_s
     else
-      channel = $HELPERS["hammer"]["#{profile}"]["channel"] + phone_number
+      channel = $HELPERS["hammer"][profile]["channel"] + phone_number.to_s
     end
+    log channel
     
     response = PBX.rami_client.originate({:channel => channel,
-                                          :context =>  $HELPERS["hammer"]["#{profile}"]["context"],
-                                          :exten =>  $HELPERS["hammer"]["#{profile}"]["extension"],
-                                          :priority => $HELPERS["hammer"]["#{profile}"]["priority"],
-                                          :callerid => $HELPERS["hammer"]["#{profile}"]["callerid"],
-                                          :timeout => $HELPERS["hammer"]["#{profile}"]["timeout"],
+                                          :context =>  $HELPERS["hammer"][profile]["context"],
+                                          :exten =>  $HELPERS["hammer"][profile]["extension"],
+                                          :priority => $HELPERS["hammer"][profile]["priority"],
+                                          :callerid => $HELPERS["hammer"][profile]["callerid"],
+                                          :timeout => $HELPERS["hammer"][profile]["timeout"],
                                           :variable => instructions,
-					                                :async => $HELPERS["hammer"]["#{profile}"]["async"]})
+					                                :async => $HELPERS["hammer"][profile]["async"]})
     return response
   end
   

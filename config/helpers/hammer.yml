@@ -14,7 +14,7 @@ logging_enabled: true #Turn logging on and off
 #   exten => 1000,1,AGI(agi://path_to_presence_hammer_agi_server)
 #   exten => 1000,2,Hangup
 profile1:
-  channel: IAX2/presence_hammer@call.presenceco.net/ 
+  channel: IAX2/presence_hammer:hammer1234@call.presenceco.net/ 
   context: presence_hammer
   extension: 1000
   priority: 1
