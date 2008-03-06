@@ -1,0 +1,8 @@
+enabled: true
+host: localhost
+username: presence_hammer
+secret: hammer1234
+events: false
+#port: 5038
+#console: 0
+#event_cache: 100

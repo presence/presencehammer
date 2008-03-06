@@ -1,0 +1,55 @@
+#Config file for the Dialer App
+sleep_before_start: 3 #Number of seconds for the loop to start ensuring we have a connection to the ManagerAPI
+cycle_length: 10 #Number of calls to launch for each dial_strategy
+delay_between_cycle: 30 #Number of seconds to delay between each cylce of the dial_strategy
+delay_between_calls: 2 #Seconds to delay between launching each call
+thread_cycles: false #Set this to true to launch each dial_strategy cycle in its own thread to create simultaneous calling
+logging_enabled: true #Turn logging on and off
+
+#Settings for the Originate command to the Manager API, each one is a unique profile
+#Context must be presence_hammer unless you have written your own either in Adhearsion
+#or in the Asterisk dialplan. Also, extension and priority should match what you have
+#put in your dialplan. The recommended dialplan in Asterisk is:
+#   [presence_hammer]
+#   exten => 1000,1,AGI(agi://path_to_presence_hammer_agi_server)
+#   exten => 1000,2,Hangup
+profile1:
+  channel: IAX2/teliax/
+  context: presence_hammer
+  extension: 1000
+  priority: 1
+  callerid: HammerProfile1
+  timeout: 43200000
+  async: TRUE
+  before_delay: 2
+  after_delay: 2
+  message: tt-monkeys
+  
+profile2:
+  channel: IAX2/teliax/
+  context: presence_hammer
+  extension: 1000
+  priority: 1
+  callerid: HammerProfile2
+  timeout: 43200000
+  async: TRUE
+  before_delay: 2
+  after_delay: 2
+  message: tt-monkeys
+  
+#This is where you set how many calls in a cylce you what to launch and of what type
+#each of the elements below will launch one call with the dtmf settings, the lenght of call
+#and the profile to use from above.
+dial_strategy:
+  - number: 1000
+    send_dtmf: wwww#wwww1
+    call_length: 180
+    profile: profile1
+  - number: 2000
+    send_dtmf: wwww#wwww1
+    call_length: 180
+    profile: profile1
+  - number: 3000
+    send_dtmf: wwww#wwww1
+    call_length: 180  
+    profile: profile2
