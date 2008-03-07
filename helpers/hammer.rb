@@ -50,7 +50,12 @@ class Hammer
         instructions = "send_dtmf=nil"
       end
       if strategy.call_length != nil
-        instructions = instructions + "|call_length=" + strategy.call_length.to_s
+        if strategy.call_length == 'random'
+          instructions = instructions + "|call_length=" + 
+            rand($HELPERS["hammer"]["max_random_length"]).to_s
+        else
+          instructions = instructions + "|call_length=" + strategy.call_length.to_s
+        end
       else
         instructions = instructions + "|call_length=0"
       end
