@@ -52,7 +52,7 @@ class Hammer
       if strategy.call_length != nil
         if strategy.call_length == 'random'
           instructions = instructions + "|call_length=" + 
-            rand($HELPERS["hammer"]["max_random_length"]).to_s
+            rand($HELPERS["hammer"]["max_random_call_length"]).to_s
         else
           instructions = instructions + "|call_length=" + strategy.call_length.to_s
         end
@@ -61,6 +61,11 @@ class Hammer
       end
       #Luanch the individual calls
       response = self.launch_call strategy.number, strategy.profile, instructions
+    end
+    if $HELPERS["hammer"]["delay_between_calls"] == 'random'
+      sleep rand($HELPERS["hammer"]["max_random_between_calls"])
+    else
+      sleep $HELPERS["hammer"]["delay_between_calls"]
     end
   end
 
