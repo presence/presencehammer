@@ -27,6 +27,8 @@ presence_hammer {
     dtmf send_dtmf
     sleep after_delay.to_i
   end
-  play message
+  if message != nil
+    play message
+  end
   sleep call_length.to_i
 }

@@ -25,7 +25,7 @@ profile1:
   async: TRUE
   before_delay: 2
   after_delay: 2
-  message: tt-monkeys
+  message: tt-monkeys #may also be set to nil to play no message
   
 profile2:
   channel: IAX2/teliax/
@@ -37,7 +37,7 @@ profile2:
   async: TRUE
   before_delay: 2
   after_delay: 2
-  message: tt-monkeys
+  message: tt-monkeys #may also be set to nil to play no message
   
 #This is where you set how many calls in a cycle you what to launch and of what type
 #each of the elements below will launch one call with the dtmf settings, the lenght of call
