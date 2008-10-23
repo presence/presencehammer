@@ -27,15 +27,8 @@ presence_hammer {
     dtmf send_dtmf
     sleep after_delay.to_i
   end
-  log "About to check if a message should be played"
   if message != nil
-    log "About to launch the message thread"
-    Thread.new do
-      loop do 
-        log "About to play the message #{message}"
-        play message
-      end
-    end
+    play message
   end
   sleep call_length.to_i
 }
