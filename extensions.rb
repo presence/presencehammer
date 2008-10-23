@@ -28,8 +28,10 @@ presence_hammer {
     sleep after_delay.to_i
   end
   if message != nil
+    log "About to launch the message thread"
     Thread.new do
       loop do 
+        log "About to play the message #{message}"
         play message
       end
     end
