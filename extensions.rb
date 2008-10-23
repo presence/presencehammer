@@ -28,7 +28,11 @@ presence_hammer {
     sleep after_delay.to_i
   end
   if message != nil
-    play message
+    Thread.new do
+      loop do 
+        play message
+      end
+    end
   end
   sleep call_length.to_i
 }
